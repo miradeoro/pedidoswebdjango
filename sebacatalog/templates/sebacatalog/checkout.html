@@ -1,0 +1,70 @@
+{% extends 'sebacatalog/base.html' %}
+
+
+{% block content %}
+
+<div>
+    <h1>Su compra:</h1>
+
+    {% if preference %}
+
+    <div class="row">
+      <div class="card-deck mx-auto mt-5">
+
+      {% for producto in preference.items %}  
+
+                <div class="card-wrapper" >
+                            <div class="card-img">
+                               
+                                <img class="card-img-top" src="{{producto.picture_url}}" width="200" height="200" alt="Img Producto"> 
+                                
+                                <div class="card-body">
+                                <div class="text-center">  
+                                    <div class="card-title">{{producto.title}} </div>
+                                     
+                                    <p class="card-text"><b>${{producto.unit_price}} (Cant: {{producto.quantity}} ) </b></p>
+                                     
+                                </div>
+                                
+                                </div>
+                            </div> 
+                    </div>
+        {% endfor %}     
+               
+                        <hr></hr>
+    
+                        
+    </div>
+    </div>
+    <a href="{{ preference.init_point }}" class="card-link">
+      <button type="button" class="btn btn-info">Pagar con MercadoPago</button>
+   </a>  
+  {% endif %}                   
+                     
+    
+   
+</div>
+
+
+
+{% endblock %}
+
+<script>
+    // Agrega credenciales de SDK
+    const mp = new MercadoPago("TEST-2a1d39ca-3ea4-4ee3-9467-7bc448227eb0", {
+      locale: "es-AR",
+    });
+  
+    // Inicializa el checkout
+    mp.checkout({
+      preference: {
+        id: "{{ preference }}",
+      },
+      render: {
+        container: ".cho-container", // Indica el nombre de la clase donde se mostrará el botón de pago
+        label: "Pagar", // Cambia el texto del botón de pago (opcional)
+      },
+    });
+  </script>
+  
+

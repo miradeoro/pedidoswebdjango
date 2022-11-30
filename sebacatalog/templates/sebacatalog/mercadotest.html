@@ -1,0 +1,40 @@
+{% extends 'sebacatalog/base.html' %}
+
+
+{% block content %}
+
+<div>
+    <h1>Test Mercado Pago</h1>
+    
+   
+</div>
+<div>
+
+	<a href="{{ preference }} "> Pagar con MercadoPago</a>
+          
+
+</div>
+<br>
+<br>
+<br>
+{% endblock %}
+
+<script>
+    // Agrega credenciales de SDK
+    const mp = new MercadoPago("TEST-2a1d39ca-3ea4-4ee3-9467-7bc448227eb0", {
+      locale: "es-AR",
+    });
+  
+    // Inicializa el checkout
+    mp.checkout({
+      preference: {
+        id: "{{ preference }}",
+      },
+      render: {
+        container: ".cho-container", // Indica el nombre de la clase donde se mostrará el botón de pago
+        label: "Pagar", // Cambia el texto del botón de pago (opcional)
+      },
+    });
+  </script>
+  
+

@@ -1,0 +1,116 @@
+{% extends 'sebacatalog/base.html' %}
+
+
+{% block content %}
+
+<h1>Demo Scaneo QR 24:</h1>
+<div id="video-container">
+    <video id="qr-video" width="270" height="190" ></video>
+</div>
+{% comment %} <div>
+    <label>
+        Highlight Style
+        <select id="scan-region-highlight-style-select">
+            <option value="default-style">Default style</option>
+            <option value="example-style-1">Example custom style 1</option>
+            <option value="example-style-2">Example custom style 2</option>
+        </select>
+    </label>
+    <label>
+        <input id="show-scan-region" type="checkbox">
+        Show scan region canvas
+    </label>
+</div>
+<div>
+    <select id="inversion-mode-select">
+        <option value="original">Scan original (dark QR code on bright background)</option>
+        <option value="invert">Scan with inverted colors (bright QR code on dark background)</option>
+        <option value="both">Scan both</option>
+    </select>
+    <br>
+</div> {% endcomment %}
+<b>Camara Activada?: </b>
+<span id="cam-has-camera"></span>
+<br>
+{% comment %} <div>
+    <b>Preferred camera:</b>
+    <select id="cam-list">
+        <option value="environment" selected>Environment Facing (default)</option>
+        <option value="user">User Facing</option>
+    </select>
+</div>
+<b>Camera has flash: </b>
+<span id="cam-has-flash"></span>
+<div>
+    <button id="flash-toggle">📸 Flash: <span id="flash-state">off</span></button>
+</div> {% endcomment %}
+<br>
+ <b>Codigo QR : </b>
+<span id="cam-qr-result">None</span>
+<br>
+{% comment %}
+<b>Last detected at: </b>
+<span id="cam-qr-result-timestamp"></span> {% endcomment %}
+<br>
+{% comment %} <button id="start-button">Start</button> {% endcomment %}
+
+<button type="button" class="btn btn-success" id="start-button">Codigo QR</button>
+<button type="button" class="btn btn-danger" id="stop-button">Stop Scan QR</button>
+
+{% comment %} <button id="stop-button">Stop Scan QR</button> {% endcomment %}
+<hr>
+
+<p id="carro_compras"></p>
+{% comment %} <h1>Scan from File:</h1>
+<input type="file" id="file-selector">
+<b>Detected QR code: </b>
+<span id="file-qr-result">None</span> {% endcomment %}
+
+{% endblock %}
+
+
+<style>
+    div {
+        margin-bottom: 16px;
+    }
+
+    #video-container {
+        line-height: 0;
+    }
+
+    #video-container.example-style-1 .scan-region-highlight-svg,
+    #video-container.example-style-1 .code-outline-highlight {
+        stroke: #64a2f3 !important;
+    }
+
+    #video-container.example-style-2 {
+        position: relative;
+        width: max-content;
+        height: max-content;
+        overflow: hidden;
+    }
+    #video-container.example-style-2 .scan-region-highlight {
+        border-radius: 30px;
+        outline: rgba(0, 0, 0, .25) solid 50vmax;
+    }
+    #video-container.example-style-2 .scan-region-highlight-svg {
+        display: none;
+    }
+    #video-container.example-style-2 .code-outline-highlight {
+        stroke: rgba(255, 255, 255, .5) !important;
+        stroke-width: 15 !important;
+        stroke-dasharray: none !important;
+    }
+
+    #flash-toggle {
+        display: none;
+    }
+
+    hr {
+        margin-top: 32px;
+    }
+    input[type="file"] {
+        display: block;
+        margin-bottom: 16px;
+    }
+</style>
