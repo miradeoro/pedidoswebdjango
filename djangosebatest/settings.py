@@ -84,7 +84,7 @@ DATABASES = {
 
     "default": {
        "ENGINE": "django.db.backends.mysql",
-        "NAME": "pedidossoft54_seba",
+        "NAME": "pedidos_sli",
         "USER": "root",
         "PASSWORD": "soft54",
         "HOST": "127.0.0.1",
