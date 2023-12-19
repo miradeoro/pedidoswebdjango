@@ -1,0 +1,43 @@
+
+{% extends 'sebacatalog/base.html' %}
+
+
+{% block content %}
+{% comment %} {% load static %}  
+   
+
+   <img src="{% static '/images/FOTO NO DISPONIBLE.png' %}" alt="My image" height="300px" width="300px"/>  
+    {% endcomment %}
+   
+   {% if categorias %}
+        <ul>
+            
+            <div class="row">
+                <div class="card-deck mx-auto">
+            {% for categoria in categorias %}
+                <a href="/slicatalog/productos/{{ categoria.idcategoria }}/">
+                <div class="card-wrapper">
+                    <div class="card-img">
+                        <img class="card-img-top" src="{{categoria.foto}}" width="300" height="300" alt="Img Categorias"> 
+                        <div class="text-center"  
+                             class="card-title"><b>{{ categoria.descripcion }}</b>
+                        </div>
+                     </div>
+                </div>
+                </a>
+
+                {% if forloop.counter|divisibleby:"4" %}
+                    </div>
+                    </div> 
+            
+                    <div class="row"> 
+                    <div class="card-deck mx-auto">
+                {% endif %}    
+            {% endfor %}
+                </div>
+            </div>
+        </ul>
+        {% else %}
+            <p>No hay categorias de segundo nivel cargadas</p>
+        {% endif %}
+{% endblock %}

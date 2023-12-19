@@ -1,0 +1,50 @@
+{% extends 'sebacatalog/base.html' %}
+
+
+{% block content %}
+      
+        <div class="row">
+            <div class="card-deck mx-auto mt-5">
+                
+       
+                {% if productos %}
+            
+                    {% for producto in productos %}
+                    
+                       
+                    <div class="card-wrapper" >
+                            <div class="card-img">
+                                <a href="">
+                                    <img class="card-img-top" src="{{producto.Foto}}" width="300" height="300" alt="Img Producto"> 
+                                </a>
+                                <div class="card-body">
+                                <div class="text-center">  
+                                    <div class="card-title">{{producto.dat_descipcion01}} </div>
+                                     
+                                    <p class="card-text"><b>${{producto.imp_precio}}</b></p>
+                                    <a href="/slicatalog/mercadopago/{{ producto.idproducto }}/" class="card-link">
+                                        <button type="button" class="btn btn-info">Comprar</button>
+                                    </a>   
+                                </div>
+                                
+                                </div>
+                            </div> 
+                    </div>
+                    
+                    {% if forloop.counter|divisibleby:"4" %}
+                        </div>
+                        </div> 
+                        <hr></hr>
+                        <div class="row"> 
+                        <div class="card-deck mx-auto">
+                    {% endif %}       
+                    {% endfor %}
+                
+                {% else %}
+                    <p>No hay productos en este nivel</p>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+
+{% endblock %}
