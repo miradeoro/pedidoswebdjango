@@ -263,7 +263,7 @@ def mercadopago_controller(request,idproducto):
     context = {'preference': preference}
 
 
-    return render(request, 'slicatalog/checkout.html', context)
+    return render(request, 'sebacatalog/checkout.html', context)
 
 def qr_controller(request):
      return render(request, 'slicatalog/qrscan.html')   
@@ -418,7 +418,7 @@ def checkout_controller(request):
     context = {'preference': preference}
 
 
-    return render(request, 'slicatalog/checkout.html', context)
+    return render(request, 'sebacatalog/checkout.html', context)
 
 
     #return HttpResponse("This cart is making me thirsty!")

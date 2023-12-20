@@ -244,9 +244,9 @@
               else
               {
                 cart2 = sessionStorage.getItem('shoppingCart');
-                var url = "/sebacatalog/checkout_cart/" ;  
+                var url = "/slicatalog/checkout_cart/" ;  
                 shoppingCart.clearCart();
-                $('<form action="/sebacatalog/checkout_cart/" method="POST"/>')
+                $('<form action="/slicatalog/checkout_cart/" method="POST"/>')
                 .append($('<input type="hidden" name="shopping_cart">').val(cart2))
                 .appendTo($(document.body)) //it has to be added somewhere into the <body>
                 .submit();
