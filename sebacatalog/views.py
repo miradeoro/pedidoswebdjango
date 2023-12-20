@@ -39,20 +39,20 @@ import datetime
 
 #Sin importar loader ni HttpResponse
 def index(request):
-    lista_categorias=DboCategoriasWeb.objects.filter(nivel="1")
+    lista_categorias=DboCategoriasWeb.objects.filter(nivel="1",activo="S")
     context = {'categorias': lista_categorias}
     return render(request, 'sebacatalog/index.html', context)   
 
 def categorias_nivel_2(request,idcategoria):
-    lista_categorias=DboCategoriasWeb.objects.filter(nivel="2",idcategoriaagrupa=idcategoria)
+    lista_categorias=DboCategoriasWeb.objects.filter(nivel="2",idcategoriaagrupa=idcategoria,activo="S")
     context = {'categorias': lista_categorias}
     return render(request, 'sebacatalog/categorias_level2.html', context)  
 
 
 def categorias_nivel_3(request,idcategoria):
-    lista_categorias=DboCategoriasWeb.objects.filter(nivel="3",idcategoriaagrupa=idcategoria)
+    lista_categorias=DboCategoriasWeb.objects.filter(nivel="3",idcategoriaagrupa=idcategoria,activo="S")
     context = {'categorias': lista_categorias}
-    return render(request, 'sebacatalog/categorias_level3.html', context)  
+    return render(request, 'slicatalog/categorias_level3.html', context)  
 
 def lista_productos(request,idcategoria):
     #Solo considera Productos Excel
@@ -124,7 +124,7 @@ def lista_productos(request,idcategoria):
     #return render(request,'sebacatalog/lista_productos.html', context)  
     
     #with JS cart
-    return render(request,'sebacatalog/lista_productos_cart.html', context)  
+    return render(request,'slicatalog/lista_productos_cart.html', context)  
 
 
 #mercadopago
@@ -246,9 +246,9 @@ def mercadopago_controller(request,idproducto):
         },
 
         "back_urls": {
-            "success": "http://127.0.0.1:8000/sebacatalog/", #usar redirect, procesar status pedido
-            "failure": "http://127.0.0.1:8000/sebacatalog/", #usar para eso otro endpoint
-            "pending": "http://127.0.0.1:8000/sebacatalog/"
+            "success": "http://127.0.0.1:8000/slicatalog/", #usar redirect, procesar status pedido
+            "failure": "http://127.0.0.1:8000/slicatalog/", #usar para eso otro endpoint
+            "pending": "http://127.0.0.1:8000/slicatalog/"
         },
     }
 
@@ -263,14 +263,14 @@ def mercadopago_controller(request,idproducto):
     context = {'preference': preference}
 
 
-    return render(request, 'sebacatalog/checkout.html', context)
+    return render(request, 'slicatalog/checkout.html', context)
 
 def qr_controller(request):
-     return render(request, 'sebacatalog/qrscan.html')   
+     return render(request, 'slicatalog/qrscan.html')   
 
 
 def cart_controller(request):
-     return render(request, 'sebacatalog/cart.html')
+     return render(request, 'slicatalog/cart.html')
 
 @csrf_exempt
 def checkout_controller(request):
@@ -302,7 +302,7 @@ def checkout_controller(request):
         
         "payer": {
             "name": "Jorge",
-            "surname": "Garquetti",
+            "surname": "Test",
             "email": "ceo@argentina.com.ar",
             "phone": {
                 "area_code": "11",
@@ -320,9 +320,9 @@ def checkout_controller(request):
         },
 
         "back_urls": {
-            "success": "http://127.0.0.1:8000/sebacatalog/postpayment", #usar redirect, procesar status pedido
-            "failure": "http://127.0.0.1:8000/sebacatalog/", #usar para eso otro endpoint
-            "pending": "http://127.0.0.1:8000/sebacatalog/"
+            "success": "http://127.0.0.1:8000/slicatalog/postpayment", #usar redirect, procesar status pedido
+            "failure": "http://127.0.0.1:8000/slicatalog/", #usar para eso otro endpoint
+            "pending": "http://127.0.0.1:8000/slicatalog/"
         },
     }
     
@@ -418,7 +418,7 @@ def checkout_controller(request):
     context = {'preference': preference}
 
 
-    return render(request, 'sebacatalog/checkout.html', context)
+    return render(request, 'slicatalog/checkout.html', context)
 
 
     #return HttpResponse("This cart is making me thirsty!")
@@ -430,7 +430,7 @@ def payment_controller(request):
     print(compra)
 
     #return render(request, 'sebacatalog/checkout.html', context)
-    return HttpResponse("This cart is making me thirsty!")
+    return HttpResponse("Carro de compras")
 
 #Luego de realizado el pago
 def postpayment_controller(request):
@@ -548,6 +548,6 @@ def postpayment_controller(request):
     else:
         return HttpResponseServerError     
 
-    return redirect('/sebacatalog/')
+    return redirect('/slicatalog/')
 
   
