@@ -52,7 +52,7 @@ def categorias_nivel_2(request,idcategoria):
 def categorias_nivel_3(request,idcategoria):
     lista_categorias=DboCategoriasWeb.objects.filter(nivel="3",idcategoriaagrupa=idcategoria,activo="S")
     context = {'categorias': lista_categorias}
-    return render(request, 'slicatalog/categorias_level3.html', context)  
+    return render(request, 'sebacatalog/categorias_level3.html', context)  
 
 def lista_productos(request,idcategoria):
     #Solo considera Productos Excel
@@ -124,10 +124,10 @@ def lista_productos(request,idcategoria):
     #return render(request,'sebacatalog/lista_productos.html', context)  
     
     #with JS cart
-    return render(request,'slicatalog/lista_productos_cart.html', context)  
+    return render(request,'sebacatalog/lista_productos_cart.html', context)  
 
 
-#mercadopago
+#mercadopago    
 def mercadopago_controller(request,idproducto):
 
     # Agrega credenciales

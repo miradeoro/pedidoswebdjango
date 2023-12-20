@@ -1,6 +1,6 @@
 {% extends 'sebacatalog/base.html' %}
 
-
+{% load static %} 
 {% block content %}
 
 
@@ -12,11 +12,15 @@
 
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img class="d-block w-100"  src="https://nanolog.vteximg.com.br/arquivos/ids/167438/Sebastian-Cabezal-Recurrente.jpg?auto=yes&bg=777&fg=555&text=First slide" alt="First slide">
+            <img class="d-block w-100"  src="{% static 'images/slicarrousel1.png' %}" height="350" width="300" alt="First slide">
           </div>
 
           <div class="carousel-item">
-            <img class="d-block w-100"  src="https://nanolog.vteximg.com.br/arquivos/ids/167279/Desktop.jpg?auto=yes&bg=666&fg=444&text=Second slide" alt="Second slide">
+            <img class="d-block w-100"  src="{% static 'images/slicarrousel2.png' %}" height="350" width="300" alt="Second slide">
+          </div>
+
+          <div class="carousel-item">
+            <img class="d-block w-100"  src="{% static 'images/slicarrousel3.png' %}" height="350" width="300" alt="Second slide">
           </div>
         </div>
 
@@ -31,7 +35,7 @@
       </div>
       <hr>
       <div>
-        <h1 class="text-info" <b>Nuestros Productos</b></h1>
+        <h1 class="text-danger"> Nuestros Productos</h1>
       </div>
       
       {% if categorias %}
@@ -88,7 +92,9 @@
                             <rect x="1" y="1" width="34" height="34" rx="17" stroke="#009455" stroke-width="2" />
                             </svg>
                             <div class="benefit-text">
-                            <h6>Compra segura</h6>
+                            <h6><b>Inbound</b></h6>
+                            <p>Retiros y entregas en terminales. <br>
+                            Recepción y almacenamiento. PT, MP, POP.</p>
                             </div>
                         </div>
                     
@@ -100,8 +106,8 @@
                             <rect x="1" y="1" width="34" height="34" rx="17" stroke="#009455" stroke-width="2" />
                             </svg>
                             <div class="benefit-text">
-                            <h6>Envío Sin Cargo</h6>
-                            <p>Para todo CABA</p>
+                            <h6><b>Almacenamiento</b></h6>
+                            <p>Recepción y almacenamiento PT, MP, POP.</p>
                             </div>
                         </div>
                     </td>    
@@ -112,8 +118,8 @@
                             <rect x="1" y="1" width="34" height="34" rx="17" stroke="#009455" stroke-width="2" />
                             </svg>
                             <div class="benefit-text">
-                            <h6>Retiro en sucursal</h6>
-                            <p>Con descuentos</p>
+                            <h6><b>Distribución</b></h6>
+                            <p>Local, Nacional e Internacional</p>
                             </div>
                         </div>
                     </td>
@@ -124,25 +130,9 @@
                             <rect x="1" y="1" width="34" height="34" rx="17" stroke="#009455" stroke-width="2" />
                             </svg>
                             <div class="benefit-text">
-                            <h6>Cuotas sin interés</h6>
-                            <p>Ver medios de pago</p>
+                            <h6><b>Custom Brokerage</b></h6>
+                            <p>Marítimos, Aéreos, Terrestres, Freight Forwarding</p>
                             </div>
-                        </div>
-                    </td>
-                    <td class="text-center">
-                        <div class="benefit-item descuentos">
-                            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M18.0001 29.14C17.7201 29.14 17.4401 29.05 17.2101 28.88L15.4401 27.54L13.2501 27.82C12.6601 27.9 12.1001 27.57 11.8701 27.02L11.0201 24.98L8.98005 24.12C8.44005 23.9 8.11005 23.33 8.19005 22.75L8.47005 20.56L7.13005 18.8C6.78005 18.33 6.78005 17.68 7.13005 17.22L8.47005 15.45L8.18005 13.25C8.11005 12.66 8.44005 12.1 8.98005 11.87L11.0201 11.02L11.8801 8.97999C12.1001 8.43999 12.6601 8.10999 13.2501 8.17999L15.4401 8.45999L17.2001 7.11999C17.6701 6.76999 18.3201 6.75999 18.7801 7.11999L20.5401 8.45999L22.7301 8.17999C23.3201 8.10999 23.8801 8.42999 24.1101 8.97999L24.9601 11.02L27.0001 11.88C27.5401 12.1 27.8701 12.67 27.7901 13.25L27.5101 15.44L28.8501 17.2C29.2001 17.67 29.2001 18.32 28.8501 18.78L27.5101 20.55L27.7901 22.74C27.8601 23.32 27.5401 23.89 26.9901 24.12L24.9501 24.97L24.0901 27.01C23.8701 27.55 23.3101 27.87 22.7201 27.8L20.5301 27.52L18.7701 28.86C18.5601 29.05 18.2801 29.14 18.0001 29.14ZM15.2201 27.37C15.2201 27.37 15.2301 27.37 15.2201 27.37V27.37ZM20.7901 27.36C20.7801 27.37 20.7801 27.37 20.7901 27.36V27.36ZM15.6401 25.51C15.9301 25.51 16.2101 25.6 16.4401 25.78L18.0001 26.97L19.5701 25.78C19.8401 25.57 20.1701 25.48 20.5201 25.52L22.4801 25.77L23.2401 23.95C23.3701 23.63 23.6201 23.38 23.9401 23.25L25.7501 22.49L25.5001 20.53C25.4601 20.18 25.5501 19.84 25.7601 19.57L26.9701 18L25.7801 16.43C25.5701 16.16 25.4801 15.82 25.5201 15.48L25.7701 13.52L23.9501 12.76C23.6301 12.63 23.3801 12.38 23.2501 12.06L22.4901 10.25L20.5301 10.5C20.1801 10.54 19.8401 10.45 19.5701 10.24L18.0001 9.02999L16.4301 10.22C16.1601 10.43 15.8301 10.52 15.4801 10.48L13.5201 10.23L12.7501 12.05C12.6201 12.37 12.3701 12.62 12.0501 12.75L10.2301 13.52L10.4801 15.48C10.5201 15.83 10.4301 16.17 10.2201 16.44L9.03005 18L10.2201 19.57C10.4301 19.84 10.5201 20.18 10.4801 20.52L10.2301 22.48L12.0501 23.24C12.3701 23.37 12.6201 23.62 12.7501 23.94L13.5101 25.75L15.4701 25.5C15.5301 25.51 15.5801 25.51 15.6401 25.51ZM13.7201 26.24C13.7201 26.25 13.7201 26.24 13.7201 26.24V26.24ZM24.7301 25.09C24.7201 25.09 24.7201 25.09 24.7301 25.09V25.09ZM26.2501 22.28C26.2501 22.28 26.2401 22.28 26.2501 22.28V22.28ZM27.3701 20.77C27.3701 20.78 27.3701 20.77 27.3701 20.77V20.77ZM8.63005 15.22C8.63005 15.22 8.63005 15.23 8.63005 15.22V15.22ZM27.3601 15.21C27.3701 15.22 27.3701 15.22 27.3601 15.21V15.21ZM9.76005 13.72C9.75005 13.72 9.76005 13.72 9.76005 13.72V13.72ZM25.0901 11.27C25.0901 11.28 25.0901 11.28 25.0901 11.27V11.27ZM22.2801 9.74999C22.2801 9.74999 22.2801 9.75999 22.2801 9.74999V9.74999ZM20.7701 8.62999C20.7801 8.62999 20.7701 8.62999 20.7701 8.62999V8.62999Z" fill="#009455" />
-                            <path d="M20.7929 13.7927L13.7926 20.793L15.2068 22.2072L22.2071 15.2069L20.7929 13.7927Z" fill="#009455" />
-                            <path d="M15 17C16.1046 17 17 16.1046 17 15C17 13.8954 16.1046 13 15 13C13.8954 13 13 13.8954 13 15C13 16.1046 13.8954 17 15 17Z" fill="#009455" />
-                            <path d="M21 23C22.1046 23 23 22.1046 23 21C23 19.8954 22.1046 19 21 19C19.8954 19 19 19.8954 19 21C19 22.1046 19.8954 23 21 23Z" fill="#009455" />
-                            <rect x="1" y="1" width="34" height="34" rx="17" stroke="#009455" stroke-width="2" />
-                            </svg>
-                            <div class="benefit-text">
-                            <h6>Primera compra</h6>
-                            <p>Con descuentos</p>
-                            </div>
-                        </div>
                         </div>
                     </td>
                     
