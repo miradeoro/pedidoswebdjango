@@ -47,8 +47,9 @@
                 <a href="/slicatalog/nivel2/{{ categoria.idcategoria }}/">
                     <div class="card-wrapper">
                                 <div class="card-img">
+                                    
+                                    <img class="card-img-top" src="{% static 'images/'|add:categoria.foto %}" height="300" width="300" alt="Img Categorias">
 
-                                    <img class="card-img-top" src="{{categoria.foto}}"  height=300 weight=300 alt="Img Categorias"> 
                                     <div class="text-center"  
                                          class="card-title"><b>{{ categoria.descripcion }}</b>
                                     </div>
