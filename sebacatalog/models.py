@@ -203,6 +203,7 @@ class DboProductocatWeb(models.Model):
     pc_id = models.BigIntegerField(db_column='PC_Id', blank=True,primary_key=True)  # Field name made lowercase.
     producto = models.TextField(db_column='Producto', blank=True, null=True)  # Field name made lowercase.
     categoria = models.FloatField(db_column='Categoria', blank=True, null=True)  # Field name made lowercase.
+    precio = models.FloatField(db_column='Precio', blank=True, null=True)  # Field name made lowercase.
     descripcion = models.TextField(db_column='Descripcion', blank=True, null=True)  # Field name made lowercase.
     descripcioncorta = models.TextField(db_column='DescripcionCorta', blank=True, null=True)  # Field name made lowercase.
     foto = models.TextField(db_column='Foto', blank=True, null=True)  # Field name made lowercase.
