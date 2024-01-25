@@ -60,64 +60,76 @@ def lista_productos(request,idcategoria):
 
     #Excel contra Gestion Productos
     #get logged customer later
-    idcliente="W00015"
-    #lista usuario
-    user_info=DboVeclaa.objects.filter(cod_codigo=idcliente)
-    user_info=user_info.values()[0]['cod_listapr']
-    #print (user_info)
+    # idcliente="W00015"
+    # #lista usuario
+    # user_info=DboVeclaa.objects.filter(cod_codigo=idcliente)
+    # user_info=user_info.values()[0]['cod_listapr']
+    # #print (user_info)
 
-    #user_info=DboVeclaa.objects.raw("SELECT dbo_veclaa.cod_codigo,dbo_veclaa.dat_razonsocial,dbo_veclaa.cod_listapr,dbo_stliaa.dat_descripcion as desc_listavta,dbo_veclaa.cod_convta,dbo_vecvaa.dat_descripcion as desc_condvta, dbo_veclaa.dat_domicilio,dbo_veclaa.dat_localidad FROM dbo_veclaa LEFT JOIN dbo_stliaa ON dbo_veclaa.cod_listapr=dbo_stliaa.cod_codigo LEFT JOIN dbo_vecvaa ON dbo_vecvaa.cod_codigo=dbo_veclaa.cod_codigo WHERE dbo_veclaa.cod_codigo='W00015'")
+    # #user_info=DboVeclaa.objects.raw("SELECT dbo_veclaa.cod_codigo,dbo_veclaa.dat_razonsocial,dbo_veclaa.cod_listapr,dbo_stliaa.dat_descripcion as desc_listavta,dbo_veclaa.cod_convta,dbo_vecvaa.dat_descripcion as desc_condvta, dbo_veclaa.dat_domicilio,dbo_veclaa.dat_localidad FROM dbo_veclaa LEFT JOIN dbo_stliaa ON dbo_veclaa.cod_listapr=dbo_stliaa.cod_codigo LEFT JOIN dbo_vecvaa ON dbo_vecvaa.cod_codigo=dbo_veclaa.cod_codigo WHERE dbo_veclaa.cod_codigo='W00015'")
     
-    product_list=DboStpdaa.objects.raw("SELECT dbo_stpdaa.idproducto,dbo_stpdaa.cod_producto, \
-    dbo_ProductoCat_Web.Descripcion as dat_descipcion01,  dbo_stpdaa.dat_rela12,dbo_stpdaa.dat_estante, \
-    dbo_stlpaa.imp_precio,dbo_stpdaa.cod_familia,dbo_ProductoCat_Web.Foto  \
-    FROM dbo_stpdaa \
-    JOIN dbo_stlpaa ON  dbo_stlpaa.cod_producto=dbo_stpdaa.cod_producto \
-    JOIN dbo_ProductoCat_Web ON  dbo_ProductoCat_Web.Producto=dbo_stpdaa.cod_producto \
-    JOIN dbo_Categorias_Web ON  dbo_ProductoCat_Web.Categoria=dbo_Categorias_Web.IdCategoria \
-    WHERE dbo_ProductoCat_Web.Categoria="+str(idcategoria)+ \
-    " AND dbo_stpdaa.dat_vercam=1 \
-    AND dbo_stlpaa.cod_codigo=0  \
-    AND dbo_stpdaa.dat_habilitado='S' \
-    AND dbo_ProductoCat_Web.Activo='S' \
-    ORDER BY dbo_stpdaa.cod_producto ASC")          
+    # product_list=DboStpdaa.objects.raw("SELECT dbo_stpdaa.idproducto,dbo_stpdaa.cod_producto, \
+    # dbo_ProductoCat_Web.Descripcion as dat_descipcion01,  dbo_stpdaa.dat_rela12,dbo_stpdaa.dat_estante, \
+    # dbo_stlpaa.imp_precio,dbo_stpdaa.cod_familia,dbo_ProductoCat_Web.Foto  \
+    # FROM dbo_stpdaa \
+    # JOIN dbo_stlpaa ON  dbo_stlpaa.cod_producto=dbo_stpdaa.cod_producto \
+    # JOIN dbo_ProductoCat_Web ON  dbo_ProductoCat_Web.Producto=dbo_stpdaa.cod_producto \
+    # JOIN dbo_Categorias_Web ON  dbo_ProductoCat_Web.Categoria=dbo_Categorias_Web.IdCategoria \
+    # WHERE dbo_ProductoCat_Web.Categoria="+str(idcategoria)+ \
+    # " AND dbo_stpdaa.dat_vercam=1 \
+    # AND dbo_stlpaa.cod_codigo=0  \
+    # AND dbo_stpdaa.dat_habilitado='S' \
+    # AND dbo_ProductoCat_Web.Activo='S' \
+    # ORDER BY dbo_stpdaa.cod_producto ASC")        
 
+   
     #Descuento es 0 por default
-    product_list.dat_dtoitem=0
-    product_list.dat_dtoadic=0
+    # product_list.dat_dtoitem=0
+    # product_list.dat_dtoadic=0
 
     #Controlar foto,agregar descuento si lo tiene
+
+    product_list=DboProductocatWeb.objects.raw("SELECT * FROM dbo_productocat_web \
+                                               WHERE dbo_productocat_web.Categoria='"+str(idcategoria)+"' \
+                                                AND dbo_productocat_web.Activo='S'"
+                                               )
+   
+    print(product_list)
     for producto in product_list:
-
+        print(producto.producto)
+        print(producto.descripcion)
+        print(producto.precio)
+        print(producto.activo)
+        print(producto.foto)
         #redondeo de decimales
-        producto.imp_precio=round(producto.imp_precio,2)
+        #producto.imp_precio=round(producto.imp_precio,2)
 
-        print(producto.cod_producto)
-        print(producto.dat_descipcion01)
-        print(producto.dat_rela12)
-        print(round(producto.imp_precio,2))
+        #print(producto.cod_producto)
+        #print(producto.dat_descipcion01)
+        #print(producto.dat_rela12)
+        #print(round(producto.imp_precio,2))
         #si no tiene foto cambiar a no imagen.png 
-        if producto.Foto==None:
-            print("None!")
-        else:
-            print (producto.Foto)
+        # if producto.Foto==None:
+        #     print("None!")
+        # else:
+        #     print (producto.Foto)
         #Hay descuentos?
         #
-        producto_descuento=DboVedfaa.objects.raw("SELECT dbo_vedfaa.nro_serie,dbo_vedfaa.dat_dtoitem,\
-        dbo_vedfaa.dat_dtoadic \
-        FROM dbo_vedfaa \
-        WHERE dbo_vedfaa.dat_vercam=1 \
-        AND dbo_vedfaa.cod_cliente="+user_info+ \
-        " AND dbo_vedfaa.cod_familia="+producto.cod_familia+" LIMIT 1")
+        # producto_descuento=DboVedfaa.objects.raw("SELECT dbo_vedfaa.nro_serie,dbo_vedfaa.dat_dtoitem,\
+        # dbo_vedfaa.dat_dtoadic \
+        # FROM dbo_vedfaa \
+        # WHERE dbo_vedfaa.dat_vercam=1 \
+        # AND dbo_vedfaa.cod_cliente="+user_info+ \
+        # " AND dbo_vedfaa.cod_familia="+producto.cod_familia+" LIMIT 1")
 
-        if producto_descuento!=None:
-            for desc in producto_descuento:
-                product_list.dat_dtoitem=desc.dat_dtoitem
-                product_list.dat_dtoadic=desc.dat_dtoadic
+        # if producto_descuento!=None:
+        #     for desc in producto_descuento:
+        #         product_list.dat_dtoitem=desc.dat_dtoitem
+        #         product_list.dat_dtoadic=desc.dat_dtoadic
             
-            print("Descuento ",product_list.dat_dtoitem)
-            print("Desc Adic ",product_list.dat_dtoadic)
-        print()
+        #     print("Descuento ",product_list.dat_dtoitem)
+        #     print("Desc Adic ",product_list.dat_dtoadic)
+        # print()
 
 
     context={'productos':product_list}

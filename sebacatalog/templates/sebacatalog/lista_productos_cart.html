@@ -1,4 +1,5 @@
 {% extends 'sebacatalog/base.html' %}
+{% load static %} 
 
 {% block content %}
       
@@ -11,21 +12,21 @@
                     
                     <div class="card-wrapper" >
                             <div class="card-img">
-                              <a href="#" data-name="{{producto.idproducto}}" data-description="{{producto.dat_descipcion01}}" data-price="{{producto.imp_precio}}" class="add-to-cart card-link">
-                                    <img class="card-img-top" src="{{producto.Foto}}" width="300" height="300" alt="Img Producto"> 
+                              <a href="#" data-name="{{producto.producto}}" data-description="{{producto.descripcion}}" data-price="{{producto.precio}}" class="add-to-cart card-link">
+                                    <img class="card-img-top" src="{% static 'images/'|add:producto.foto %}" width="250" height="250" alt="Img Producto"> 
                                 </a>
 
                                 <div class="card-body">
                                 <div class="text-center">  
-                                    <div class="card-title">{{producto.dat_descipcion01}} </div>
+                                    <div class="card-title">{{producto.descripcion}} </div>
                                      
-                                    <p class="card-text"><b>${{producto.imp_precio}}</b></p>
-                                   {% comment %}  <a href="/sebacatalog/mercadopago/{{ producto.idproducto }}/" class="card-link">
+                                    <p class="card-text"><b>${{producto.precio}}</b></p>
+                                   {% comment %}  <a href="/sebacatalog/mercadopago/{{ producto.producto }}/" class="card-link">
                                         <button type="button" class="btn btn-info">Comprar</button>
                                     </a>   
                                     {% endcomment %} 
 
-                                    <a href="#" data-name="{{producto.idproducto}}" data-description="{{producto.dat_descipcion01}}" data-price="{{producto.imp_precio}}" class="add-to-cart card-link btn btn-info">Comprar</a>
+                                    <a href="#" data-name="{{producto.producto}}" data-description="{{producto.descripcion}}" data-price="{{producto.precio}}" class="add-to-cart card-link btn btn-info">Comprar</a>
                                 </div>
                                 
                                 </div>
