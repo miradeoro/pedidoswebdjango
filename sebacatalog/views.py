@@ -338,76 +338,41 @@ def checkout_controller(request):
         },
     }
     
-    #get logged customer later
-    #lista usuario
-    user_info=DboVeclaa.objects.filter(cod_codigo="W00015")
-    user_info=user_info.values()[0]['cod_listapr']
-    #print (user_info)
-
-    #print(type(cart_data))
-    #print(cart_data)   
-    
     #Recorrer cart
     for producto_comprado in cart_data:
     #      print(producto_comprado['name'])
     #      print(producto_comprado['count'])
  
             
-        product_list=DboStpdaa.objects.raw("SELECT dbo_stpdaa.idproducto,dbo_stpdaa.cod_producto, \
-        dbo_ProductoCat_Web.Descripcion as dat_descipcion01,  dbo_stpdaa.dat_rela12,dbo_stpdaa.dat_estante, \
-        dbo_stlpaa.imp_precio,dbo_stpdaa.cod_familia,dbo_ProductoCat_Web.Foto  \
-        FROM dbo_stpdaa \
-        JOIN dbo_stlpaa ON  dbo_stlpaa.cod_producto=dbo_stpdaa.cod_producto \
-        JOIN dbo_ProductoCat_Web ON  dbo_ProductoCat_Web.Producto=dbo_stpdaa.cod_producto \
-        JOIN dbo_Categorias_Web ON  dbo_ProductoCat_Web.Categoria=dbo_Categorias_Web.IdCategoria \
-        WHERE dbo_stpdaa.idproducto= "+str(producto_comprado['name'])+ \
-        " AND dbo_stpdaa.dat_vercam=1 \
-        AND dbo_stlpaa.cod_codigo=0  \
-        AND dbo_stpdaa.dat_habilitado='S' \
-        AND dbo_ProductoCat_Web.Activo='S' \
-        ORDER BY dbo_stpdaa.cod_producto ASC")      
+        product_list=DboProductocatWeb.objects.raw("SELECT * FROM dbo_productocat_web \
+                                               WHERE dbo_productocat_web.Descripcion='"+str(producto_comprado['description'])+"' \
+                                                AND dbo_productocat_web.Activo='S'"
+                                               )
+       
     
-        product_list.dat_dtoitem=0
-        product_list.dat_dtoadic=0
-
+        print(product_list)
         for producto in product_list:
-    #     # print(producto.cod_producto)
-    #     # print(producto.dat_descipcion01)
-    #     # print(producto.dat_rela12)
-    #     # print(round(producto.imp_precio,2))
+            print(producto.producto)
+            print(producto.descripcion)
+            print(producto.precio)
+            print(producto.activo)
+            print(producto.foto)
 
     #       #redondeo de decimales
-            producto.imp_precio=round(producto.imp_precio,2)
+            producto.precio=round(producto.precio,2)
 
             #si no tiene foto cambiar a no imagen.png 
-            if producto.Foto==None:
+            if producto.foto==None:
                 print("None!")
             else:
-                print (producto.Foto)
+                print (producto.foto)
 
-    #     #Hay descuentos?
-            producto_descuento=DboVedfaa.objects.raw
-            ("SELECT dbo_vedfaa.nro_serie,dbo_vedfaa.dat_dtoitem,\
-            dbo_vedfaa.dat_dtoadic \
-            FROM dbo_vedfaa \
-            WHERE dbo_vedfaa.dat_vercam=1 \
-            AND dbo_vedfaa.cod_cliente="+user_info+ \
-            " AND dbo_vedfaa.cod_familia="+producto.cod_familia+" LIMIT 1")
-
-            # if producto_descuento!=None:
-            #     for desc in producto_descuento:
-            #         product_list.dat_dtoitem=desc.dat_dtoitem
-            #         product_list.dat_dtoadic=desc.dat_dtoadic
-                
-    #     #     print("Descuento ",product_list.dat_dtoitem)
-    #     #     print("Desc Adic ",product_list.dat_dtoadic)
-    #     # print()
 
             Producto_a_pagar={
-                'title':producto.dat_descipcion01,
+                'title':producto.descripcion,
                 'quantity': producto_comprado['count'],
-                'unit_price': float(producto.imp_precio),##evita json cant serialize decimal error por la DB
-                "picture_url":producto.Foto,
+                'unit_price': float(producto.precio),##evita json cant serialize decimal error por la DB
+                "picture_url":producto.foto,
             }
 
             print(Producto_a_pagar)
