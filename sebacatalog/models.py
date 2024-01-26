@@ -10,21 +10,21 @@ from django.db import models
 
 #New SLI Models
 
-class DireccionEmpresa(models.Model):
+class DireccionEmpresas(models.Model):
     iddireccionempresa = models.AutoField(primary_key=True)
     pais=models.CharField(max_length=100)
     provincia=models.CharField(max_length=100)
     ciudad=models.CharField(max_length=100)
     leadtime=models.FloatField() #en dias,horas? se calcula afuera en vez de estar fijo?
     
-class Empresa(models.Model):
+class Empresas(models.Model):
     idempresa = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100)
     mail = models.CharField(max_length=500)
     habilitado = models.PositiveIntegerField()
-    direccion=models.ForeignKey(DireccionEmpresa,on_delete=models.CASCADE)
+    direccion=models.ForeignKey(DireccionEmpresas,on_delete=models.CASCADE)
 
-class Cliente(models.Model):
+class Clientes(models.Model):
     idusuario = models.AutoField(primary_key=True)
     usuario = models.CharField(max_length=100)
     clave = models.CharField(max_length=100)
@@ -32,19 +32,55 @@ class Cliente(models.Model):
     habilitado = models.PositiveIntegerField()
     mail = models.CharField(max_length=500)
     perfil = models.CharField(max_length=100)
-    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(Empresas, on_delete=models.CASCADE)
 
-class TipoImputacion(models.Mode):
+class TipoImputaciones(models.Model):
     idtipo_imputacion=models.AutoField(primary_key=True)
     descripcion=models.CharField(max_length=50)
     
-class Imputacion(models.Model):
+class Imputaciones(models.Model):
     idImputacion=models.AutoField(primary_key=True)
     nro_imputacion=models.CharField(max_length=30)
     monto_imputacion=models.FloatField()
     observacion=models.CharField(max_length=255)
-    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
-    tipo_imputacion=models.ForeignKey(TipoImputacion, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(Empresas, on_delete=models.CASCADE)
+    tipo_imputacion=models.ForeignKey(TipoImputaciones, on_delete=models.CASCADE)
+
+class Categorias(models.Model):
+    idcategoria = models.AutoField(primary_key=True)  
+    descripcion = models.TextField()  
+    nivel = models.IntegerField()  
+    idcategoriaagrupa = models.IntegerField()  
+    foto = models.TextField()  
+    observaciones = models.TextField()  
+    descuento_porcentaje=models.IntegerField()
+    activo = models.BooleanField(default=True)
+
+class Productos(models.Model):
+    idproducto = models.AutoField(primary_key=True)  
+    producto = models.TextField() 
+    precio = models.FloatField() 
+    descripcion = models.TextField() 
+    descripcioncorta = models.TextField()  
+    foto = models.TextField()  
+    observaciones = models.TextField()  
+    activo = models.BooleanField(default=True)
+    categoria=models.ForeignKey(Categorias, on_delete=models.CASCADE)
+
+class Pedidos(models.Model):
+    idpedido=models.AutoField(primary_key=True)
+    nro_pedido=models.BigIntegerField()
+    fecha_pedido=models.DateTimeField()
+    fecha_entrega=models.DateTimeField()
+    cliente=models.ForeignKey(Clientes, on_delete=models.CASCADE)
+    empresa=models.ForeignKey(Empresas, on_delete=models.CASCADE)
+    direccionempresa_entrega=models.ForeignKey(DireccionEmpresas, on_delete=models.CASCADE)
+    
+class Pedidos_linea(models.Model):
+    pedido=models.ForeignKey(Pedidos, on_delete=models.CASCADE)
+    producto=models.ForeignKey(Productos, on_delete=models.CASCADE)
+    precio_producto=models.FloatField()
+    cantidad_producto=models.IntegerField()
     
 #End New SLI Models
 
