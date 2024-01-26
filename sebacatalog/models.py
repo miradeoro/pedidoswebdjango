@@ -8,6 +8,46 @@
 from django.db import models
 
 
+#New SLI Models
+
+class DireccionEmpresa(models.Model):
+    iddireccionempresa = models.AutoField(primary_key=True)
+    pais=models.CharField(max_length=100)
+    provincia=models.CharField(max_length=100)
+    ciudad=models.CharField(max_length=100)
+    leadtime=models.FloatField() #en dias,horas? se calcula afuera en vez de estar fijo?
+    
+class Empresa(models.Model):
+    idempresa = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=100)
+    mail = models.CharField(max_length=500)
+    habilitado = models.PositiveIntegerField()
+    direccion=models.ForeignKey(DireccionEmpresa,on_delete=models.CASCADE)
+
+class Cliente(models.Model):
+    idusuario = models.AutoField(primary_key=True)
+    usuario = models.CharField(max_length=100)
+    clave = models.CharField(max_length=100)
+    nombre = models.CharField(max_length=100)
+    habilitado = models.PositiveIntegerField()
+    mail = models.CharField(max_length=500)
+    perfil = models.CharField(max_length=100)
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+
+class TipoImputacion(models.Mode):
+    idtipo_imputacion=models.AutoField(primary_key=True)
+    descripcion=models.CharField(max_length=50)
+    
+class Imputacion(models.Model):
+    idImputacion=models.AutoField(primary_key=True)
+    nro_imputacion=models.CharField(max_length=30)
+    monto_imputacion=models.FloatField()
+    observacion=models.CharField(max_length=255)
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    tipo_imputacion=models.ForeignKey(TipoImputacion, on_delete=models.CASCADE)
+    
+#End New SLI Models
+
 class DboCategoriasWeb(models.Model):
     idcategoria = models.TextField(db_column='IdCategoria', blank=True,primary_key=True)  # Field name made lowercase.
     descripcion = models.TextField(db_column='Descripcion', blank=True, null=True)  # Field name made lowercase.
