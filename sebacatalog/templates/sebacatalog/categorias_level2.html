@@ -4,6 +4,23 @@
 {% block content %}
 {% comment %} {% load static %}  
    
+<style>
+    .carousel-item img {
+        max-height: 400px;
+        width: auto;
+        margin: auto;
+    }
+      .responsive-image {
+        max-width: 100%;  /* Ensures the image is never more than 100% of the parent element */
+        max-height: 300px; /* Adjust this to your preference */
+        width: auto;  /* Maintain aspect ratio */
+        height: auto; /* Maintain aspect ratio */
+        display: block; /* Removes extra space below the image */
+        margin: 0 auto; /* Center the image if it's smaller than the parent */
+      }
+    
+    </style>
+
 
    <img src="{% static '/images/FOTO NO DISPONIBLE.png' %}" alt="My image" height="300px" width="300px"/>  
     {% endcomment %}
@@ -17,7 +34,7 @@
                 <a href="/slicatalog/productos/{{ categoria.idcategoria }}/">
                 <div class="card-wrapper">
                     <div class="card-img">
-                        <img class="card-img-top" src="{{categoria.foto}}" width="300" height="300" alt="Img Categorias"> 
+                        <img class="card-img-top responsive-image" src="{{categoria.foto}}" width="300" height="300" alt="Img Categorias"> 
                         <div class="text-center"  
                              class="card-title"><b>{{ categoria.descripcion }}</b>
                         </div>

@@ -1,6 +1,7 @@
 {% extends 'sebacatalog/base.html' %}
 {% load static %} 
 
+
 {% block content %}
       
         <div class="row">
@@ -13,7 +14,7 @@
                     <div class="card-wrapper" >
                             <div class="card-img">
                               <a href="#" data-name="{{producto.producto}}" data-description="{{producto.descripcion}}" data-price="{{producto.precio}}" class="add-to-cart card-link">
-                                    <img class="card-img-top" src="{% static 'images/'|add:producto.foto %}" width="250" height="250" alt="Img Producto"> 
+                                    <img class="card-img-top" src="{% static 'images/'|add:producto.foto %}" width="250" height="350" alt="Img Producto"> 
                                 </a>
 
                                 <div class="card-body">
