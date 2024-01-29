@@ -534,3 +534,6 @@ def order_summary(request):
 def address_book(request):
     return render(request, 'sebacatalog/direcciones_entrega.html')  
 
+def confirmed_order(request):
+    return render(request, 'sebacatalog/orden_confirmada.html')  
+

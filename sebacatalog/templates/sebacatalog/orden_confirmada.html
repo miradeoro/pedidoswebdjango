@@ -1,0 +1,146 @@
+{% extends 'sebacatalog/base.html' %}
+{% load static %} 
+
+{% block content %}
+
+    <style>
+        /* Custom CSS will go here */
+      body {
+          background-color: #f5f5f5;
+      }
+
+      .nuevo-container {
+          background-color: white;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .table {
+          border-collapse: collapse;
+      }
+
+      .table th, .table td {
+          border: none;
+          border-bottom: 1px solid #ddd;
+      }
+
+      .table thead th {
+          border-bottom: 2px solid #ddd;
+      }
+
+      .text-black {
+          color: #000;
+      }
+
+    </style>
+
+    <div class="nuevo-container container py-3">
+      
+        <div class="row justify-content-center">
+        
+                  <h5>Gracias por su pedido - Su orden fue recibida</h5>
+                 
+        </div> 
+    
+    </div>
+
+    <br>
+
+    <div class="nuevo-container container py-3">
+      
+        <div class="row justify-content-center">
+        
+                
+                  <!-- Column 1 content will go here -->
+                  <div class="col-md-3">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-black font-weight-bold">Pedido</th>            
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SLI00091917</td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Column 2 content will go here -->
+                <div class="col-md-3">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-black font-weight-bold">Fecha</th>            
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2/2/2024</td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+
+                
+                <!-- Column 3 content will go here -->
+                <div class="col-md-3">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-black font-weight-bold">Total</th>            
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>98647 ARS</td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+
+                
+                
+                <!-- Column 4 content will go here -->
+                <div class="col-md-3">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-black font-weight-bold">Forma de Pago</th>            
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Orden de Compra</td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+                
+                
+              </div>
+             
+                 
+    
+    </div>
+
+    <br>
+    
+    <div class="nuevo-container container py-3">
+      
+        <div class="row justify-content-center">
+        
+                  <h4 class="text-success font-weight-bold">Fecha Estimada de Entrega :  5/2/2024 </h4>
+                 
+        </div> 
+    
+    </div>
+
+
+
+{% endblock %}
+
