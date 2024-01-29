@@ -18,6 +18,8 @@ urlpatterns = [
     
     
     path('ordersummary/', views.order_summary, name='order_summary'),
+    path('addressbook/', views.address_book, name='address_book'),
+    
     
 
 ]

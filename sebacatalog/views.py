@@ -530,3 +530,7 @@ def postpayment_controller(request):
   
 def order_summary(request):
     return render(request, 'sebacatalog/resumen_orden.html')  
+
+def address_book(request):
+    return render(request, 'sebacatalog/direcciones_entrega.html')  
+
