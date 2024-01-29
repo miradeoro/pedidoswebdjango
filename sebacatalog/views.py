@@ -528,3 +528,5 @@ def postpayment_controller(request):
     return redirect('/slicatalog/')
 
   
+def order_summary(request):
+    return render(request, 'sebacatalog/resumen_orden.html')  

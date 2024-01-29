@@ -16,6 +16,9 @@ urlpatterns = [
     path('payment/', views.payment_controller, name='payment_controller'),
     path('postpayment/', views.postpayment_controller, name='postpayment_controller'),
     
+    
+    path('ordersummary/', views.order_summary, name='order_summary'),
+    
 
 ]
 
