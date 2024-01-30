@@ -59,14 +59,46 @@
 		console.log('Cart:', cart)
 	
 	</script>
+
+<style>
+    .carousel-item img {
+        max-height: 400px;
+        width: auto;
+        margin: auto;
+    }
+      .responsive-image {
+        max-width: 100%;  /* Ensures the image is never more than 100% of the parent element */
+        max-height: 300px; /* Adjust this to your preference */
+        width: auto;  /* Maintain aspect ratio */
+        height: auto; /* Maintain aspect ratio */
+        display: block; /* Removes extra space below the image */
+        margin: 0 auto; /* Center the image if it's smaller than the parent */
+      }
+      
+    body {
+        background-color: #f5f5f5;
+    }
+
+    .nuevo-container {
+          background-color: white;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+    </style>
+
     </head>
     <body>
     
-    <div class="container-fluid my-5">
+    <div class="container-fluid">
         <div class="row">
         <div class="col">
+            <div class="nuevo-container container-fluid py-3">
+      
+         
             {% block content %}
             {% endblock %}
+
+        </div>
         </div>
         </div>
     </div>
@@ -82,7 +114,7 @@
 <!--<script src="../qr-scanner.legacy.min.js"></script>-->
 {% load static %}  
    
-
+<!-- 
 <script src="{% static '/js/qr-scanner.umd.min.js' %}"></script>  
 
  <script>
@@ -139,7 +171,7 @@
      });
  };
 
- {% comment %} scanner.start().then(() => {
+  scanner.start().then(() => {
      updateFlashAvailability();
      // List cameras after the scanner started to avoid listCamera's stream and the scanner's stream being requested
      // at the same time which can result in listCamera's unconstrained stream also being offered to the scanner.
@@ -151,14 +183,14 @@
          option.text = camera.label;
          camList.add(option);
      }));
- }); {% endcomment %}
+ }); 
 
  QrScanner.hasCamera().then(hasCamera => camHasCamera.textContent = hasCamera);
 
  // for debugging
  window.scanner = scanner;
 
- {% comment %} document.getElementById('scan-region-highlight-style-select').addEventListener('change', (e) => {
+  document.getElementById('scan-region-highlight-style-select').addEventListener('change', (e) => {
      videoContainer.className = e.target.value;
      scanner._updateOverlay(); // reposition the highlight because style 2 sets position: relative
  });
@@ -168,19 +200,19 @@
      const label = input.parentNode;
      label.parentNode.insertBefore(scanner.$canvas, label.nextSibling);
      scanner.$canvas.style.display = input.checked ? 'block' : 'none';
- }); {% endcomment %}
+ }); 
 
- {% comment %} document.getElementById('inversion-mode-select').addEventListener('change', event => {
+  document.getElementById('inversion-mode-select').addEventListener('change', event => {
      scanner.setInversionMode(event.target.value);
- }); {% endcomment %}
+ }); 
 
- {% comment %} camList.addEventListener('change', event => {
+  camList.addEventListener('change', event => {
      scanner.setCamera(event.target.value).then(updateFlashAvailability);
  });
 
  flashToggle.addEventListener('click', () => {
      scanner.toggleFlash().then(() => flashState.textContent = scanner.isFlashOn() ? 'on' : 'off');
- }); {% endcomment %}
+ }); 
 
  document.getElementById('start-button').addEventListener('click', () => {
      scanner.start();
@@ -192,16 +224,16 @@
 
  // ####### File Scanning #######
 
- {% comment %} fileSelector.addEventListener('change', event => {
+ fileSelector.addEventListener('change', event => {
      const file = fileSelector.files[0];
-     if (!file) {
-         return;
-     }
-     QrScanner.scanImage(file, { returnDetailedScanResult: true })
-         .then(result => setResult(fileQrResult, result))
-         .catch(e => setResult(fileQrResult, { data: e || 'No QR code found.' }));
- }); {% endcomment %}
-</script>
+//      if (!file) { -->
+<!-- //          return;
+//      }
+//      QrScanner.scanImage(file, { returnDetailedScanResult: true })
+//          .then(result => setResult(fileQrResult, result))
+//          .catch(e => setResult(fileQrResult, { data: e || 'No QR code found.' }));
+//  }); 
+// </script> -->
 
 
 

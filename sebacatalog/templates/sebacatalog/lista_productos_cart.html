@@ -34,14 +34,14 @@
                             </div> 
                     </div>
                     
-                    {% if forloop.counter|divisibleby:"4" %}
+                    {% if forloop.counter|divisibleby:"3" %}
                         </div>
                         </div> 
                         <hr></hr>
                         <div class="row"> 
-                        <div class="card-deck mx-auto">
+                        <div class="card-deck mx-auto mt-5">
                     {% endif %}       
-                    {% endfor %}
+                    {% endfor %} 
                 
                 {% else %}
                     <p>No hay productos en este nivel</p>
