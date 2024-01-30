@@ -14,6 +14,7 @@ from sebacatalog.models import DboStpdaa,DboVeclaa,DboStlpaa,DboStliaa,DboVecvaa
 import mercadopago
 import json
 import datetime
+import random
 
 # def index(request):
 #     return HttpResponse("Seba Veterinaria")
@@ -287,6 +288,10 @@ def cart_controller(request):
 @csrf_exempt
 def checkout_controller(request):
     #cart_data = json.loads(request.body)
+    
+    #items a procesar (version sin MercadoLibre)
+    productos_apagar=[]
+
     cart_data=json.loads(request.POST['shopping_cart'])
     print("Request!:")
    
@@ -304,39 +309,40 @@ def checkout_controller(request):
     #     "count":1}
     # ]
     
+    #Para Mercado Libre
     # Agrega credenciales
-    sdk = mercadopago.SDK("TEST-7399728750816177-031617-e0e9a8555dcbf9676961169a9445324e-667108987")
+    # sdk = mercadopago.SDK("TEST-7399728750816177-031617-e0e9a8555dcbf9676961169a9445324e-667108987")
     #Cart de MercadoPago
     #preference_data=dict()
     #preference_data['']
-    preference_data = {
-        "items": [],  
+    # preference_data = {
+    #     "items": [],  
         
-        "payer": {
-            "name": "Jorge",
-            "surname": "Test",
-            "email": "ceo@argentina.com.ar",
-            "phone": {
-                "area_code": "11",
-                "number": "7844-4441"
-            },
-            "identification": {
-                "type": "DNI",
-                "number": "12345678"
-            },
-            "address": {
-                "street_name": "UnaCalle",
-                "street_number": 217,
-                "zip_code": "1908"
-            }
-        },
+    #     "payer": {
+    #         "name": "Jorge",
+    #         "surname": "Test",
+    #         "email": "ceo@argentina.com.ar",
+    #         "phone": {
+    #             "area_code": "11",
+    #             "number": "7844-4441"
+    #         },
+    #         "identification": {
+    #             "type": "DNI",
+    #             "number": "12345678"
+    #         },
+    #         "address": {
+    #             "street_name": "UnaCalle",
+    #             "street_number": 217,
+    #             "zip_code": "1908"
+    #         }
+    #     },
 
-        "back_urls": {
-            "success": "http://127.0.0.1:8000/slicatalog/postpayment", #usar redirect, procesar status pedido
-            "failure": "http://127.0.0.1:8000/slicatalog/", #usar para eso otro endpoint
-            "pending": "http://127.0.0.1:8000/slicatalog/"
-        },
-    }
+    #     "back_urls": {
+    #         "success": "http://127.0.0.1:8000/slicatalog/postpayment", #usar redirect, procesar status pedido
+    #         "failure": "http://127.0.0.1:8000/slicatalog/", #usar para eso otro endpoint
+    #         "pending": "http://127.0.0.1:8000/slicatalog/"
+    #     },
+    # }
     
     #Recorrer cart
     for producto_comprado in cart_data:
@@ -375,27 +381,40 @@ def checkout_controller(request):
                 "picture_url":producto.foto,
             }
 
-            print(Producto_a_pagar)
-            print()
+            productos_apagar.append(Producto_a_pagar)
 
-            #Agregar a preferencia MercadoPago
-            preference_data['items'].append(Producto_a_pagar)
 
-    
-  
+            
+    #Para Mercado Libre
+    #Agregar a preferencia MercadoPago
+    # preference_data['items'].append(Producto_a_pagar)
 
-    print(preference_data)
+    # print(preference_data)
 
-    preference_response = sdk.preference().create(preference_data)
-    preference = preference_response["response"]
-    # #preference = preference_response['response']['id']
-    print("This preference:")
-    print(preference)
+    # preference_response = sdk.preference().create(preference_data)
+    # preference = preference_response["response"]
+    # # #preference = preference_response['response']['id']
+    # print("This preference:")
+    # print(preference)
     # sandbox_init_point=preference['sandbox_init_point']
-    context = {'preference': preference}
+    
+    #context = {'preference': preference}
+    #return render(request, 'sebacatalog/checkout.html', context)
+    print("Pedido:")
+    print(productos_apagar)
+    print()
 
+    #get order grand total
+    grand_total=0
+    for producto in productos_apagar:
+        grand_total=grand_total+producto['unit_price']
 
-    return render(request, 'sebacatalog/checkout.html', context)
+    print("Total final: ",grand_total)
+    context={'productos':productos_apagar,
+             'total_orden':grand_total}
+
+    #SIN Mercado Libre
+    return render(request, 'sebacatalog/resumen_orden.html', context)
 
 
     #return HttpResponse("This cart is making me thirsty!")
@@ -529,11 +548,55 @@ def postpayment_controller(request):
 
   
 def order_summary(request):
-    return render(request, 'sebacatalog/resumen_orden.html')  
+    
+    data = request.session.get('datos_pedido', {})
+    request.session.pop('datos_pedido',None)
+    print(data)
+
+    random_float = random.uniform(2000, 10000)
+
+    # Round it to 2 decimal places
+    random_float = round(random_float, 2)
+    
+    # Get current date and time
+    now = datetime.datetime.now()
+
+    # Format the date and time
+    formatted_date_time = now.strftime("%d-%m-%Y %H:%M")
+
+    data={
+        'idpedido':'SLI00'+str(random.randint(1000, 9999)),
+        'fecha_pedido':formatted_date_time,
+        'total_pedido':str(random_float),
+        'forma_pago':'Orden de Compra: '+str(random.randint(1000, 9999))
+        }
+    
+    print(data)
+
+    return render(request, 'sebacatalog/orden_confirmada.html', {'data': data})
+        
 
 def address_book(request):
     return render(request, 'sebacatalog/direcciones_entrega.html')  
 
+@csrf_exempt
 def confirmed_order(request):
-    return render(request, 'sebacatalog/orden_confirmada.html')  
+
+    data = json.loads(request.body)
+
+    order_totalData=data.get('order_totalData')
+    order_paymentData=data.get('order_paymentData')
+    order_payment_numberData=data.get('order_payment_numberData')
+
+    
+    print(order_totalData)
+    print(order_paymentData)
+    print(order_payment_numberData)
+
+    #grabar en session para que la proxima view pueda acceder
+    request.session['datos_pedido'] = data
+    request.session.save()  # Explicitly save the session data
+
+
+    return HttpResponseRedirect('/slicatalog/ordersummary/')  
 

@@ -60,7 +60,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>SLI00091917</td>
+                                <td>{{ data.idpedido }} </td>
                             </tr>
                             
                         </tbody>
@@ -77,7 +77,8 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>2/2/2024</td>
+                                <td>{{ data.fecha_pedido }} 
+                                </td>
                             </tr>
                             
                         </tbody>
@@ -95,7 +96,9 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>98647 ARS</td>
+                                {% if data %}
+                                <td>{{ data.total_pedido }} ARS</td>
+                                {% endif %}
                             </tr>
                             
                         </tbody>
@@ -114,7 +117,9 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Orden de Compra</td>
+                                {% if data %}
+                                <td>{{ data.forma_pago }}  </td>
+                                {% endif %}
                             </tr>
                             
                         </tbody>

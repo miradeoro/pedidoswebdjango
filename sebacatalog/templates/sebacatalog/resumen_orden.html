@@ -33,50 +33,114 @@
 
     </style>
 
-      
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {    
+        document.getElementById('order_createorder').addEventListener('click', function() {
+            var order_total = document.getElementById('order_grandtotal').innerText;
+            var order_payment = document.getElementById('order_paymentchoice').value;
+            var order_payment_number = document.getElementById('order_paymentchoice_no').value;
+
+            var dataToSend = {
+                order_totalData: order_total,
+                order_paymentData: order_payment,
+                order_payment_numberData: order_payment_number
+            };
+
+            console.log(dataToSend);
+            sendPostRequest(dataToSend);
+        });
+
+        function sendPostRequest(data) {
+            fetch('/slicatalog/confirmed_order/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    // Handle non-redirect responses
+                    return response.json();
+                }
+                
+            })
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    });    
+    </script>
+    <div>
+        <h2 class="text-danger ">Pedido:</h2>
+        <br>
+        
+    </div>
+    
         <div class="row justify-content-center">
           
             <div class="col-md-6">
-              <p class="text-black font-weight-bold"> SU PEDIDO</p>
+             
                 <!-- Column 1 content will go here -->
-                <div class="col-md-6">
+                <div class="table-responsive-sm col-md-6">
                   <table class="table">
                       <thead>
                           <tr>
                               <th scope="col" class="text-black font-weight-bold">Producto</th>
+                              <th scope="col" class="text-black font-weight-bold">Precio</th>
+                              <th scope="col" class="text-black font-weight-bold">Cantidad</th>
+                              <th scope="col" class="text-black font-weight-bold">Descuento</th>
                               <th scope="col" class="text-black font-weight-bold">Total</th>
                           </tr>
                       </thead>
                       <tbody>
+                        {% if productos %}   
+                        {% for producto in productos%} 
                           <tr>
-                              <td>Product 1</td>
-                              <td>$100</td>
+                              <td>{{producto.title}}</td>
+                              <td>${{producto.unit_price}}</td>
+                              <td>{{producto.quantity}}</td>
+                              <td>-</td>
+                              <td>${{producto.unit_price}}</td>
                           </tr>
+                        {% endfor %} 
+                        {% endif %}
                           <!-- Add more products here -->
                           <tr class="font-weight-bold text-danger">
-                              <td>Total</td>
-                              <td>$XXX</td>
+                              <td>Total Orden</td>
+                              {% if total_orden %}
+                              <td id="order_grandtotal">{{total_orden}}</td>
+                              {% endif %}
+
                           </tr>
                       </tbody>
                   </table>
               </div>
               
             </div>
-            
+
             <div class="col-md-6">
-              <p class="text-black font-weight-bold"> SU FORMA DE PAGO</p>
+             
                 <!-- Column 2 content will go here -->
                 <div class="col-md-6">
                   <div class="form-group">
                       <label for="imputation" class="text-black font-weight-bold">Imputacion</label>
-                      <select class="form-control" id="imputation">
+                      <select class="form-control" id="order_paymentchoice">
                           <option>Orden de Compra</option>
                           <option>Proyecto</option>
                           <option>Centro de costo</option>
                       </select>
                   </div>
                   <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Ingresar numero">
+                      <input type="text" id="order_paymentchoice_no" class="form-control" placeholder="Ingresar numero">
                   </div>
               </div>
               
@@ -86,13 +150,11 @@
             <div class="col-md-6">
                 <!-- Button will go here -->
                 <div class="col-md-6 text-left">
-                  <button type="button" class="btn btn-danger">Realizar Pedido</button>
+                  <button type="button" id="order_createorder" class="btn btn-danger">Realizar Pedido</button>
               </div>
               
             </div>
         </div>
 
 
-
 {% endblock %}
-
